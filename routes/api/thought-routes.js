@@ -33,7 +33,7 @@ router.put('api/thoughts/:id', (req,res) =>{
 });
 
 router.delete('api/thoughts/:id', (req,res) =>{
-    //delete a user
+    //delete a thought
 });
 
 module.exports = router;
