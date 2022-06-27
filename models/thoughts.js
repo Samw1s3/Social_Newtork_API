@@ -24,6 +24,10 @@ const thoughtSchema = new Schema(
     reactions: [
       reactionSchema
     ],
+    user_id: {
+        type: Number,
+        required: true
+    }
   },
   {
     id: true,

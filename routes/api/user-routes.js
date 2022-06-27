@@ -34,6 +34,7 @@ router.post('/api/users', (req,res) => {
 
 router.put('/api/users/:id', (req,res) =>{
     //update a user
+    User.findOneAndUpdate({_id: req.params.id})
 
 });
 
