@@ -21,9 +21,7 @@ router.route('/').get(getThoughts).post(createThought);
 router.route('/:id').get(findThought);
 
 //update a thought
-
-
-
+router.route('/:id').get(findThought).put(updateThought);
 //delete a thought
 
 

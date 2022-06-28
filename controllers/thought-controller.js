@@ -28,7 +28,7 @@ const thoughtController = {
             .then((thoughtData) => {
                 return User.findOneAndUpdate(
                     // id or UserId or user_id???
-                    { id: req.body.user_id },
+                    { _id: req.body.user_id },
                     { $push: { thoughts: thoughtData._id }},
                     { new: true }
                 );
@@ -46,7 +46,18 @@ const thoughtController = {
     },
     // update thought
     updateThought(req,res) {
-
+       Thought.findOneAndUpdate(
+            {_id: req.params.id},
+            {$set: req.body},
+            {new:true})
+        .then((thoughtData) => {
+            if (!thoughtData) {
+                res.status(404).json({ message: 'No user with this id!' });
+                return;
+            }
+            res.json(thoughtData)
+        })
+            .catch((err) => res.status(500).json(err));
     },
     // delete thought 
     deleteThought(req,res) {
