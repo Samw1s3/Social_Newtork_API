@@ -34,7 +34,18 @@ router.post('/', (req,res) => {
 
 router.put('/:id', (req,res) =>{
     //update a user
-    User.findOneAndUpdate({_id: req.params.id})
+    User.findOneAndUpdate(
+        {_id: req.params.id},
+        {$set: req.body},
+        {new:true})
+    .then((user) => {
+        if (!user) {
+            res.status(404).json({ message: 'No user with this id!' });
+            return;
+        }
+        res.json(user)
+    })
+        .catch((err) => res.status(500).json(err));
 
 });
 

@@ -14,7 +14,14 @@ const thoughtController = {
         })
     },
     // get one thought by id
-
+    findThought(req,res) {
+        Thought.findOne({_id: req.params.id})
+        .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: 'No thought with that ID' })
+          : res.json({thought})
+        )
+    },
     // create thought 
     createThought(req, res) {
         Thought.create(req.body)
@@ -38,12 +45,21 @@ const thoughtController = {
             })
     },
     // update thought
+    updateThought(req,res) {
 
+    },
     // delete thought 
+    deleteThought(req,res) {
 
+    },
     // add a reaction 
+    addReaction(req,res) {
 
+    },
     // remove a reaction
+    deleteReaction(req,res) {
+
+    },
 };
 
 module.exports = thoughtController;
