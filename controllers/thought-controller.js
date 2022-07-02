@@ -37,7 +37,7 @@ const thoughtController = {
                 if (!userData) {
                     return res.status(404).json({ message: 'created but user no exists ' })
                 }
-                res.json({ message: 'successs creating thought' })
+                res.json({ message: 'successfully created thought' })
             })
             .catch((error) => {
                 console.log(error)
@@ -104,7 +104,7 @@ const thoughtController = {
         console.log(params);
     Thought.findOneAndUpdate(
         { _id: params.thoughtId },
-        { $pull: { reactions: {reactions_id: params.reactionId} } },
+        { $pull: { reactions: {reactions_id: params.reactionsId} } },
         { new: true }
     )
     .then((thoughtData) => {
