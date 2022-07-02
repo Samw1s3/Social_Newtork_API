@@ -64,7 +64,7 @@ const thoughtController = {
     removeThought(req, res) {
         User.findOneAndUpdate(
             { _id: req.params.id },
-            { $pull: { thoughts: { thoughts_id: req.params.thoughtId } } },
+            { $pull: { thoughts: req.params.thoughtId } },
             { runValidators: true, new: true }
         )
             .then((user) =>
@@ -72,8 +72,13 @@ const thoughtController = {
                     ? res
                         .status(404)
                         .json({ message: 'No user found with that ID :(' })
-                    : res.json(user)
+                    : Thought.findOneandDelete(
+                        {_id: req.params.thoughtId},
+                        { $pull: { thoughts: req.params.thoughtId  } },
+                        {new:true}
+                        )
             )
+            .then(() => res.json({message: 'Thought deleted'}))
             .catch((err) => res.status(500).json(err));
     },
     // add a reaction 
@@ -95,7 +100,7 @@ const thoughtController = {
     deleteReaction({ params }, res) {
     Thought.findOneAndUpdate(
         { _id: params.id },
-        { $pull: { reactions: { reactions_id: params.reactionId } } },
+        { $pull: { reactions: params.reactionId } },
         { new: true }
     )
         .then(thoughtData => res.json(thoughtData))
