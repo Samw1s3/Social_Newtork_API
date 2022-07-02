@@ -26,10 +26,12 @@ router.route('/:id').get(findThought).put(updateThought);
 router.route('/:id/thought/:thoughtId').delete(removeThought);
 
 //add a reaction
+// http://localhost:3001/thoughts/:id
 router.route('/:id').post(addReaction);
 
 //delete a reaction
-router.route('/:id/reactions/:reactionId').delete(removeReaction);
+// http://localhost:3001/thoughts/:thoughtId/reactions/:reactionId
+router.route('/:thoughtId/reactions/:reactionId').delete(removeReaction);
 
 
 module.exports = router;

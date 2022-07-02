@@ -1,15 +1,16 @@
 const { Schema, model } = require('mongoose');
 
 const reactionSchema = new Schema({
+        
         body: {
-        type: String,
-        required: true,
-        minLength: 1,
-        maxLength: 280,
+            type: String,
+            required: true,
+            minLength: 1,
+            maxLength: 280,
         },
         user_id: {
-        type: String,
-        required: true
+            type: String,
+            required: true
         }
     }, {
     id: true,
@@ -34,10 +35,18 @@ const thoughtSchema = new Schema(
     }
   },
   {
+    toJSON: {
+        getters:true,
+        virtuals:true
+    },
     id: true,
     timestamps: true,
   }
 );
+
+thoughtSchema.virtual("reactionCount").get(function(){
+    return this.reactions.length;
+})
 
 const Thought = model('Thought', thoughtSchema);
 

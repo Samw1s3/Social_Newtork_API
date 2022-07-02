@@ -100,17 +100,19 @@ const thoughtController = {
             .catch((err) => res.status(500).json(err));
     },
         // remove a reaction
-    removeReaction(req, res) {
+    removeReaction({params}, res) {
+        console.log(params);
     Thought.findOneAndUpdate(
-        { _id: req.params.id },
-        { $pull: { reactions: req.params.reactionId } },
+        { _id: params.thoughtId },
+        { $pull: { reactions: {reactions_id: params.reactionId} } },
         { new: true }
     )
     .then((thoughtData) => {
+        console.log(thoughtData);
         if (!thoughtData) {
           return res.status(404).json({ message: 'no thought with this id' });
         }
-        res.json({ message: 'Reaction successfully deleted' });
+        res.json({ thoughtData });
       })
       .catch((err) => {
         console.log(err);
@@ -119,6 +121,7 @@ const thoughtController = {
     }
 
 };
+
 
 
 module.exports = thoughtController;
