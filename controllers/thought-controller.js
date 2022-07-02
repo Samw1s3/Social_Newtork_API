@@ -79,7 +79,18 @@ const thoughtController = {
     },
     // add a reaction 
     addReaction(req,res) {
-
+        Thought.findOneAndUpdate(
+            {_id: req.params.id},
+            {$push: {reactions:req.body}},
+            {new:true})
+        .then((thoughtData) => {
+            if (!thoughtData) {
+                res.status(404).json({ message: 'No thought with this id!' });
+                return;
+            }
+            res.json(thoughtData, {message: "Reaction added"} )
+        })
+            .catch((err) => res.status(500).json(err));
     },
     // remove a reaction
     deleteReaction(req,res) {

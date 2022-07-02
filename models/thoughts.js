@@ -7,6 +7,10 @@ const reactionSchema = new Schema({
         minLength: 1,
         maxLength: 280,
         },
+        user_id: {
+        type: String,
+        required: true
+        }
     }, {
     id: true,
     timestamps: true,
