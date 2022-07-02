@@ -83,25 +83,6 @@ const thoughtController = {
                     console.log(err);
                     res.status(500).json(err);
                   });
-       
-        // User.findOneAndUpdate(
-        //     { _id: req.params.id },
-        //     { $pull: { thoughts: req.params.thoughtId } },
-        //     { runValidators: true, new: true }
-        // )
-        //     .then((user) =>
-        //         !user
-        //             ? res
-        //                 .status(404)
-        //                 .json({ message: 'No user found with that ID :('})
-        //             : Thought.findOneAndDelete(
-        //                 {_id: req.params.thoughtId},
-        //                 { $pull: { thoughts: req.params.thoughtId  } },
-        //                 {new:true}
-        //                 )
-        //     )
-        //     .then(() => res.json({message: 'Thought deleted'}))
-        //     .catch((err) => res.status(500).json(err));
     },
     // add a reaction 
     addReaction (req, res) {
@@ -119,15 +100,23 @@ const thoughtController = {
             .catch((err) => res.status(500).json(err));
     },
         // remove a reaction
-    removeReaction({ params }, res) {
+    removeReaction(req, res) {
     Thought.findOneAndUpdate(
-        { _id: params.id },
-        { $pull: { reactions: params.reactionId } },
+        { _id: req.params.id },
+        { $pull: { reactions: req.params.reactionId } },
         { new: true }
     )
-        .then(thoughtData => res.json(thoughtData))
-        .catch(err => res.json(err));
-    },
+    .then((thoughtData) => {
+        if (!thoughtData) {
+          return res.status(404).json({ message: 'no thought with this id' });
+        }
+        res.json({ message: 'Reaction successfully deleted' });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+    }
 
 };
 
