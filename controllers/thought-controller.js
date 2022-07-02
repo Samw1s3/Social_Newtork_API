@@ -83,12 +83,12 @@ const thoughtController = {
             {_id: req.params.id},
             {$push: {reactions:req.body}},
             {new:true})
-        .then((thoughtData) => {
-            if (!thoughtData) {
+        .then((reactionData) => {
+            if (!reactionData) {
                 res.status(404).json({ message: 'No thought with this id!' });
                 return;
             }
-            res.json(thoughtData, {message: "Reaction added"} )
+            res.json(reactionData)
         })
             .catch((err) => res.status(500).json(err));
     },
