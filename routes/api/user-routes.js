@@ -73,6 +73,7 @@ router.delete('/:id', (req,res) =>{
 });
 
 //Add friend
+//http://localhost:3001/users/:id/friends/:friendsId
 router.post('/:id/friends/:friendsId', (req,res) => {
     User.findByIdAndUpdate (
         {_id: req.params.id},
@@ -92,10 +93,11 @@ router.post('/:id/friends/:friendsId', (req,res) => {
 })
 
 // delete friend
+//http://localhost:3001/users/:id/friends/:friendsId
 router.delete('/:id/friends/:friendsId', (req,res) => {
-    User.findByIdAndUpdate (
+    User.findOneAndUpdate (
         {_id: req.params.id},
-        {$addToSet: {friends: req.params.friendsId}},
+        {$pull: {friends: req.params.friendsId}},
         {new : true}
     )
     .then((dbUserData) => {
